@@ -8,9 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
-@SpringBootApplication
-
-
+@EnableAutoConfiguration
 public class LzyApplication {
 
     public static void main(String[] args) {

@@ -1,7 +1,6 @@
 package com.hou.lzy.config;
 
-import com.hou.lzy.interceptor.LoginInterceptor;
-import org.springframework.boot.SpringBootConfiguration;
+ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -26,10 +25,10 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/api/file/**").addResourceLocations("file:" + "d:/workspace/img/");
     }
 
-    @Bean
-    public LoginInterceptor getLoginIntercepter() {
-        return new LoginInterceptor();
-    }
+//    @Bean
+//    public LoginInterceptor getLoginIntercepter() {
+//        return new LoginInterceptor();
+//    }
 
 
 //    @Override
