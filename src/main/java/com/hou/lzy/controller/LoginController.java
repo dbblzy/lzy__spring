@@ -1,23 +1,25 @@
 package com.hou.lzy.controller;
 
+import com.hou.lzy.dto.UserDTO;
 import com.hou.lzy.pojo.User;
 import com.hou.lzy.result.Result;
 import com.hou.lzy.result.ResultFactory;
+import com.hou.lzy.service.AdminRoleService;
 import com.hou.lzy.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.hibernate.annotations.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import org.apache.shiro.subject.Subject;
-import javax.servlet.http.HttpSession;
-import java.util.Objects;
+
+import java.util.List;
 
 /**
  * @author 23868
@@ -27,6 +29,8 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    AdminRoleService adminRoleService;
 
     @PostMapping(value = "/api/login")
     @ResponseBody
@@ -49,6 +53,9 @@ public class LoginController {
             return ResultFactory.buildFailResult(message);
         }
     }
+
+
+
     @ResponseBody
     @GetMapping("api/logout")
     public Result logout() {

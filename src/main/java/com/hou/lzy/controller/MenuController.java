@@ -26,10 +26,16 @@ public class MenuController {
         return adminMenuService.getMenusByCurrentUser();
     }
 
-    @RequiresPermissions("/api/admin/user")
-    @GetMapping("/api/admin/user")
-    public List<UserDTO> listUsers() throws Exception{
-        return userService.list();
+    @GetMapping("/api/admin/role/menu")
+    public List<AdminMenu> listAllMenus(){
+        List<AdminMenu> menus = adminMenuService.getMenusByRoleId(1);
+        return menus;
     }
+
+//    @RequiresPermissions("/api/admin/user")
+//    @GetMapping("/api/admin/user")
+//    public List<UserDTO> listUsers2() throws Exception{
+//        return userService.list();
+//    }
 
 }

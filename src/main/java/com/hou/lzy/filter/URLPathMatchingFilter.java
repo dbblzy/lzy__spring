@@ -37,22 +37,22 @@ public class URLPathMatchingFilter extends PathMatchingFilter {
         }
 
         String requestAPI = getPathWithinApplication(request);
-        System.out.println("访问接口：" + requestAPI);
+        System.out.println("visit interface：" + requestAPI);
 
         Subject subject = SecurityUtils.getSubject();
 
         if (!subject.isAuthenticated()) {
-            System.out.println("需要登录");
+            System.out.println("require login");
             return false;
         }
 
         // 判断访问接口是否需要过滤（数据库中是否有对应信息）
         boolean needFilter = adminPermissionService.needFilter(requestAPI);
         if (!needFilter) {
-            System.out.println("接口：" + requestAPI + "无需权限");
+            System.out.println("interface：" + requestAPI + "no require role");
             return true;
         } else {
-            System.out.println("验证访问权限：" + requestAPI);
+            System.out.println("verify visit role：" + requestAPI);
             // 判断当前用户是否有相应权限
             boolean hasPermission = false;
             String username = subject.getPrincipal().toString();
@@ -65,10 +65,10 @@ public class URLPathMatchingFilter extends PathMatchingFilter {
             }
 
             if (hasPermission) {
-                System.out.println("访问权限：" + requestAPI + "验证成功");
+                System.out.println("visit role：" + requestAPI + "verify success");
                 return true;
             } else {
-                System.out.println("当前用户没有访问接口" + requestAPI + "的权限");
+                System.out.println("this current user has not" + requestAPI + "  visit role");
                 return false;
             }
         }

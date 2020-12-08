@@ -1,5 +1,6 @@
 package com.hou.lzy.config;
 
+ //*import com.hou.lzy.interceptor.LoginInterceptor;
  import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -29,8 +30,8 @@ public class MyWebConfigurer implements WebMvcConfigurer {
 //    public LoginInterceptor getLoginIntercepter() {
 //        return new LoginInterceptor();
 //    }
-
-
+//
+//
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry){
 //        registry.addInterceptor(getLoginIntercepter())

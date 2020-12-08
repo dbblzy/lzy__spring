@@ -19,7 +19,8 @@ public class UserService {
     AdminRoleService adminRoleService;
     @Autowired
     UserDAO userDAO;
-
+    @Autowired
+    AdminUserRoleService adminUserRoleService;
     public boolean isExist(String username) {
         User user = getByName(username);
         return null!=user;
@@ -42,20 +43,41 @@ public class UserService {
         userDAO.save(user);
     }
 
-    public List<UserDTO> list() {
-        List<User> users = userDAO.findAll();
-
-        // Find all roles in DB to enable JPA persistence context.
-//        List<AdminRole> allRoles = adminRoleService.findAll();
-
-        List<UserDTO> userDTOS = users
-                .stream().map(user -> (UserDTO) new UserDTO().convertFrom(user)).collect(Collectors.toList());
-
-        userDTOS.forEach(u -> {
-            List<AdminRole> roles = adminRoleService.listRolesByUser(u.getUsername());
-            u.setRoles(roles);
-        });
-
-        return userDTOS;
+    public List<User> list(){
+        List<User> users=userDAO.findAll();
+        List<AdminRole> roles;
+        for(User user : users){
+            roles=adminRoleService.listRolesByUser(user.getUsername());
+            user.setRoles(roles);
+        }
+        return users;
     }
+
+//    public List<UserDTO> list() {
+//        List<User> users = userDAO.findAll();
+//
+//        // Find all roles in DB to enable JPA persistence context.
+////        List<AdminRole> allRoles = adminRoleService.findAll();
+//
+//        List<UserDTO> userDTOS = users
+//                .stream().map(user -> (UserDTO) new UserDTO().convertFrom(user)).collect(Collectors.toList());
+//
+//        userDTOS.forEach(u -> {
+//            List<AdminRole> roles = adminRoleService.listRolesByUser(u.getUsername());
+//            u.setRoles(roles);
+//        });
+//
+//        return userDTOS;
+//    }
+
+    // UserService
+    public void editUser(User user) {
+        User userInDB = userDAO.findByUsername(user.getUsername());
+        userInDB.setName(user.getName());
+        userInDB.setPhone(user.getPhone());
+        userInDB.setEmail(user.getEmail());
+        userDAO.save(userInDB);
+        adminUserRoleService.saveRoleChanges(userInDB.getId(), user.getRoles());
+    }
+
 }

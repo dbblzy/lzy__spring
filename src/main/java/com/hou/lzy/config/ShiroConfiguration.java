@@ -1,6 +1,6 @@
 package com.hou.lzy.config;
 
-import com.hou.lzy.filter.URLPathMatchingFilter;
+ import com.hou.lzy.filter.URLPathMatchingFilter;
 import com.hou.lzy.realm.LZYRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -31,7 +31,7 @@ public class ShiroConfiguration {
     }
 
 
-    @Bean()
+    @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -40,18 +40,18 @@ public class ShiroConfiguration {
         Map<String, Filter> customizedFilter = new HashMap<>();
 
         // 设置自定义过滤器名称为 url
-        customizedFilter.put("url",  getURLPathMatchingFilter());
+        customizedFilter.put("url", getURLPathMatchingFilter());
 
-        //filterChainDefinitionMap.put("/api/admin/**","authc");
-        //shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         // 对管理接口的访问启用自定义拦截（url 规则），即执行 URLPathMatchingFilter 中定义的过滤方法
         filterChainDefinitionMap.put("/api/admin/**", "url");
         // 启用自定义过滤器
-       shiroFilterFactoryBean.setFilters(customizedFilter);
-        filterChainDefinitionMap.put("/api/authentication", "authc");
+        shiroFilterFactoryBean.setFilters(customizedFilter);
+       // filterChainDefinitionMap.put("/api/authentication", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
+
+
 
     @Bean("securityManager")
     public SecurityManager  securityManager() {
