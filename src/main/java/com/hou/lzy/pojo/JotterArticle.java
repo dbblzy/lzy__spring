@@ -1,5 +1,6 @@
 package com.hou.lzy.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.hou.lzy.util.DateUtil;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -64,13 +65,8 @@ public class JotterArticle {
     /**
      * Article release date.
      */
-    private Date articleDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    private Timestamp articleDate;
 
-    public Date getArticleDate() {
-        return articleDate;
-    }
 
-    public void setDate(String date) {
-          DateUtil.transferDateFormat(date);
-    }
 }

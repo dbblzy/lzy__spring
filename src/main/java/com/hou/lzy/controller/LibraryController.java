@@ -21,7 +21,7 @@ public class LibraryController {
         return bookService.list();
     }
 
-    @PostMapping("/api/books")
+    @PostMapping("/api/admin/content/books")
     public Book addOrUpdate(@RequestBody Book book) throws Exception {
         bookService.addOrUpdate(book);
         return book;
@@ -50,7 +50,7 @@ public class LibraryController {
         }
     }
 
-    @PostMapping("api/covers")
+    @PostMapping("/api/admin/content/books/covers")
     public String coversUpload(MultipartFile file) throws Exception {
         String folder = "D:/workspace/img";
         File imageFolder = new File(folder);
@@ -60,7 +60,7 @@ public class LibraryController {
             f.getParentFile().mkdirs();
         try {
             file.transferTo(f);
-            String imgURL = "http://localhost:8443/api/file/" + f.getName();
+            String imgURL = "http://localhost:8442/api/file/" + f.getName();
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

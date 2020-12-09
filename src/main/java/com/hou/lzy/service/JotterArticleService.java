@@ -26,6 +26,29 @@ public class JotterArticleService {
         return  jotterArticleDAO.findAll(PageRequest.of(page, size, sort));
     }
 
+    public JotterArticle findById(int id) {
+        JotterArticle article;
+        String key = "article:" + id;
+        article = jotterArticleDAO.findById(id);
+        return article;
+    }
+    public void addOrUpdate(JotterArticle article) {
+        jotterArticleDAO.save(article);
+       // redisService.delete("article" + article.getId());
+       // Set<String> keys = redisService.getKeysByPattern("articlepage*");
+        //redisService.delete(keys);
+    }
+
+    public void delete(int id) {
+        jotterArticleDAO.deleteById(id);
+
+     //   redisService.delete("article:" + id);
+      //  Set<String> keys = redisService.getKeysByPattern("articlepage*");
+      //  redisService.delete(keys);
+    }
+
+
+
 
 //    用于复现异常
 //    @Cacheable(value = RedisConfig.REDIS_KEY_DATABASE)
